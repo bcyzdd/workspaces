@@ -26,7 +26,7 @@ class NewVistorTest(unittest.TestCase):
         )
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(10)
 
         table=self.browser.find_element_by_id('id_list_table')
         rows=table.find_elements_by_tag_name('tr')

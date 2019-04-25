@@ -37,8 +37,20 @@ class HomePageTest(TestCase):
         self.assertTemplateUsed(response,'home.html')
     def test_can_save_a_POST_request(self):
         response=self.client.post('/',data={'item_text':'A new list item'})
+
+        self.assertEqual(Item.objects.count(),1)#检查是否把一个新的item对象存入数据库，
+        # object.count（）是object.all（）.count（）的简写模式
+        new_item=Item.objects.first()#object.first（）等价于object.all()[0]
+        self.assertEqual(new_item,'A new list item')#检查待办事项的文本是否正确
+
         self.assertIn('A new list item',response.content.decode())
         self.assertTemplateUsed(response,'home.html')
+
+    def test_only_saves_items_when_necessary(self):
+        self.client.get('/')
+        self.assertEqual(Item.objects.count(),0)
+
+
 
 class  ItemModelTest(TestCase):
     def test_saving_and_retrieving_item(self):
@@ -55,6 +67,6 @@ class  ItemModelTest(TestCase):
 
         first_saved_item=saved_items[0]
         second_saved_item=saved_items[1]
-        self.assertEqual(first_saved_item.text,'he first (ever) list item')
+        self.assertEqual(first_saved_item.text,'The first (ever) list item')
         self.assertEqual(second_item.text,'Item the second')
 

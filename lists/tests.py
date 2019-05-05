@@ -3,11 +3,12 @@ from django.urls import resolve
 from django.http import HttpRequest
 from django.template.loader import render_to_string
 from lists.models import Item
-from django.test import LiveServerTestCase
+import time
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 from lists.views import home_page
 # Create your tests here.
-
 
 class HomePageTest(TestCase):
     def test_users_home_template(self):
